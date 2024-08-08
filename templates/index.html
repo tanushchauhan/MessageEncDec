@@ -1,11 +1,44 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
-  </head>
+<!-- index.html -->
+<html>
   <body>
-    Use this app to enc and dec your messages
+    <form method="post" id="myForm">
+      <br>
+      <label for="user_name">Enter your message (can be encrypted or decrypted):</label>
+      <input type="text" id="user_name" name="user_name" required>
+      <button type="submit" id="copy-btn">Run</button>
+      <p id="outputtext" style="display:none;">{{ text }}</p>
+    </form>
+    <a href="/advance">Advance Mode!</a>
   </body>
+  <!-- <script>
+    const copyBtn = document.querySelector("#copy-btn");
+    const outputtext = "{{ text }}";
+
+    copyBtn.addEventListener("click", () => {
+        const userName = nameInput.value;
+        // Create a text area element
+        const textArea = document.createElement("textarea");
+        textArea.value = outputtext;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        textArea.remove();
+    });
+</script> -->
+<!-- <script>
+  const outputtext = document.querySelector("#outputtext").innerHTML;
+
+    document.querySelector("#myForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      // Create a text area element
+      const textArea = document.createElement("textarea");
+      textArea.value = outputtext;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
+
+      alert("Text copied to clipboard: " + outputtext);
+  });
+</script> -->
 </html>
