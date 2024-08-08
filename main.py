@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from collections import Counter
 import datetime
 
 app = Flask(__name__)
@@ -356,6 +357,61 @@ def index():
         else:
             return render_template("greeting.html", name=final,text=final)
     return render_template("index.html")
+@app.route("/advance", methods=["GET", "POST"])
+def adv_index():
+    global key
+    global user_input
+    global final
+    global block1
+    global block2
+    block1 = False
+    block2 = False
+    if request.method == "POST":
+        user_input = request.form["user_name"]
+        current = datetime.datetime.now()
+        with open("log.txt", "a") as file:
+            file.write(user_input+" "+str(current)+"\n")
+        key = request.form["key"]
+        def find_duplicate(arr):
+            return [item for item, count in Counter(arr).items() if count > 1]
+        if len(find_duplicate(key)) != 0:
+            block1 = True
+        elif len(key) != 8:
+            block1 = True
+        elif "9" in key:
+            block1 = True
+        elif "0" in key:
+            block1 = True
+        else:
+            block1 = False
+        def main():
+            global key
+            global user_input
+            global final
+            global block2
+            global block1
+            temp_key = key
+            key = []
+            for i in temp_key:
+                try:
+                    key.append(int(i))
+                except:
+                    block2 = True
+            d = user_input
+            user_input = text_to_binary(user_input)
+            user_input_list = user_input.split(" ")
+            if d[0] == "-" and d[1] == "-" and d[2] == "9" and d[len(d)-3] == "9" and d[len(d)-2] == "-" and d[len(d)-1] == "-":
+                # jk = decrypt(make_long(d))
+                # final = jk
+                pass
+            else:
+                # x = make_short(encryt(user_input_list,key))
+                # final = x
+                pass
+        def text_to_binary(s):
+            return ' '.join(format(ord(c), '08b') for c in s)
+        def binary_to_text(s):
+            return ''.join(chr(int(s[i*8:i*8+8],2)) for i in range(len(s)//8))
 
 if __name__ == "__main__":
     app.run()
