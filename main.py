@@ -18,10 +18,13 @@ def index():
             key = []
             for i in temp_key:
                 key.append(int(i))
-            
-            #converting text to binary - may be a more effientient way avaliable 
-            userInput = ' '.join(format(ord(c), '08b') for c in userInput)
+            user_input = text_to_binary(user_input)
             userInputList = userInput.split(" ")
+
+        def text_to_binary(s):
+            return ' '.join(format(ord(c), '08b') for c in s)
+        def binary_to_text(s):
+            return ''.join(chr(int(s[i*8:i*8+8],2)) for i in range(len(s)//8))
 
         def make_long(enc_text):
             if enc_text[0] == "-" and enc_text[1] == "-" and enc_text[2] == "9" and enc_text[len(enc_text)-3] == "9" and enc_text[len(enc_text)-2] == "-" and enc_text[len(enc_text)-1] == "-":
@@ -126,6 +129,58 @@ def index():
                     except:
                         pass
                 z_2_string = ""
+                for i in z_2:
+                    z_2_string += i
+                z_2 = []
+                for i in z_2_string:
+                    z_2.append(i)
+                z = z_2
+                indices_10 = [i for i, x in enumerate(z_2) if x == "a"]
+                for i in indices_10:
+                    z[i] = "10"
+                indices_01 = [i for i, x in enumerate(z_2) if x == "b"]
+                for i in indices_01:
+                    z[i] = "01"
+                indices_11 = [i for i, x in enumerate(z_2) if x == "c"]
+                for i in indices_11:
+                    z[i] = "11" 
+                indices_00 = [i for i, x in enumerate(z_2) if x == "d"]
+                for i in indices_00:
+                    z[i] = "00"
+                z_string = ""
+                for i in z:
+                    z_string += i
+                return z_string
+            else:
+                return False
+            
+        def decrypt(bin):
+            c = 0
+            temp = ""
+            z = []
+            for i in bin:
+                c += 1
+                if len(temp) == 8:
+                    z.append(temp)
+                    temp = ""
+                    temp += str(i)
+                else:
+                    temp += str(i)
+                    if len(temp) == 8:
+                        z.append(temp)
+                        temp = ""
+            decrypted_text_in_binary_list = []
+            for i in z:
+                user_final = i
+                for i in range(1,9):
+                    y = key.index(i)
+                    decrypted_text_in_binary_list.append(user_final[y])
+            decrypted_text_in_binary = ""
+            for i in decrypted_text_in_binary_list:
+                decrypted_text_in_binary += i
+            return binary_to_text(decrypted_text_in_binary)
+        
+
 
 if __name__ == "__main__":
     app.run()
