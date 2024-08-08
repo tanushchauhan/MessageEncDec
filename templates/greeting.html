@@ -1,0 +1,64 @@
+<!-- greeting.html -->
+<html>
+  <body>
+    <p>Press the copy button to copy</p>
+    <p>Here is your encrypted/decrypted message:</p>
+    <b id="outputtext" >{{ name }}</b>
+    <button id="copy-btn">Copy</button>
+    <br><br>
+      <form method="post">
+        <label for="user_name">Enter your message (can be encrypted or decrypted):</label>
+        <input type="text" id="user_name" name="user_name" required>
+        <button type="submit">Run</button>
+      </form>
+      <a href="/advance">Advance Mode!</a>
+  </body>
+  <!-- <script>
+    const copyBtn = document.querySelector("#copy-btn");
+    const outputtext = "{{ text }}";
+
+    copyBtn.addEventListener("click", () => {
+        event.preventDefault();
+        const userName = nameInput.value;
+        // Create a text area element
+        const textArea = document.createElement("textarea");
+        textArea.value = outputtext;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand("copy");
+        textArea.remove();
+    });
+</script> -->
+<!-- <script>
+  const outputtext = document.querySelector("#outputtext").textContent;
+
+    document.querySelector("#myForm").addEventListener("submit", (event) => {
+      event.preventDefault();
+      // Create a text area element
+      const textArea = document.createElement("textarea");
+      textArea.textContent = outputtext;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
+  });
+</script> -->
+<script>
+  // Get the button and the <b> tag
+  const copyBtn = document.querySelector("#copy-btn");
+  const outputText = document.querySelector("#outputtext");
+
+  // Add a click event listener to the button
+  copyBtn.addEventListener("click", function() {
+      // Create a text area element
+      const textArea = document.createElement("textarea");
+      textArea.textContent = outputText.textContent;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand("copy");
+      textArea.remove();
+
+      copyBtn.innerHTML = "Copied!";
+  });
+</script>
+</html>
