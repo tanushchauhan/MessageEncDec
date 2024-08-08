@@ -2,11 +2,13 @@
 <html>
   <body>
     <form method="post" id="myForm">
-      <br>
-      <label for="user_name">Enter your message (can be encrypted or decrypted):</label>
-      <input type="text" id="user_name" name="user_name" required>
+      <br />
+      <label for="user_name"
+        >Enter your message (can be encrypted or decrypted):</label
+      >
+      <input type="text" id="user_name" name="user_name" required />
       <button type="submit" id="copy-btn">Run</button>
-      <p id="outputtext" style="display:none;">{{ text }}</p>
+      <p id="outputtext" style="display: none">{{ text }}</p>
     </form>
     <a href="/advance">Advance Mode!</a>
   </body>
@@ -25,7 +27,7 @@
         textArea.remove();
     });
 </script> -->
-<!-- <script>
+  <!-- <script>
   const outputtext = document.querySelector("#outputtext").innerHTML;
 
     document.querySelector("#myForm").addEventListener("submit", (event) => {
