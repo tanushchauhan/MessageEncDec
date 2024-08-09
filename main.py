@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request
 from collections import Counter
-import datetime
-
 app = Flask(__name__)
 
 @app.route("/", methods=["GET", "POST"])
@@ -36,19 +34,9 @@ def index():
         def encryt(text_in_binary_list, key):
             global encryted_text_in_binary
             global encryted_text_in_binary_list
-            # Io = ["1", "0"]
-            # user_nums = []
-            # for i in range(12):
-            #     f = ""
-            #     for _ in range(8):
-            #         f = f+random.choice(Io)
-            #     user_nums.append(f)
-            # user_nums_string = ""
-            # for i in user_nums:
-            #     user_nums_string += i
             encryted_text_in_binary_list = []
             for i in text_in_binary_list:
-                user_final = i#+user_nums_string
+                user_final = i
                 for x in key:
                     encryted_text_in_binary_list.append(user_final[x-1])
                 encryted_text_in_binary = ""
@@ -352,7 +340,7 @@ def index():
                 decrypted_text_in_binary += i
             return binary_to_text(decrypted_text_in_binary)
         main()
-        if "û" in final or "ú" in final or "ù" in final:
+        if "û" in final:
             return render_template("emojialert.html", name=final,text=final)
         else:
             return render_template("greeting.html", name=final,text=final)
@@ -368,9 +356,6 @@ def adv_index():
     block2 = False
     if request.method == "POST":
         user_input = request.form["user_name"]
-        current = datetime.datetime.now()
-        with open("log.txt", "a") as file:
-            file.write(user_input+" "+str(current)+"\n")
         key = request.form["key"]
         def find_duplicate(arr):
             return [item for item, count in Counter(arr).items() if count > 1]
@@ -401,13 +386,11 @@ def adv_index():
             user_input = text_to_binary(user_input)
             user_input_list = user_input.split(" ")
             if d[0] == "-" and d[1] == "-" and d[2] == "9" and d[len(d)-3] == "9" and d[len(d)-2] == "-" and d[len(d)-1] == "-":
-                # jk = decrypt(make_long(d))
-                # final = jk
-                pass
+                jk = decrypt(make_long(d))
+                final = jk
             else:
                 x = make_short(encryt(user_input_list,key))
                 final = x
-                pass
         def text_to_binary(s):
             return ' '.join(format(ord(c), '08b') for c in s)
         def binary_to_text(s):
@@ -415,19 +398,9 @@ def adv_index():
         def encryt(text_in_binary_list, key):
             global encryted_text_in_binary
             global encryted_text_in_binary_list
-            # Io = ["1", "0"]
-            # user_nums = []
-            # for i in range(12):
-            #     f = ""
-            #     for _ in range(8):
-            #         f = f+random.choice(Io)
-            #     user_nums.append(f)
-            # user_nums_string = ""
-            # for i in user_nums:
-            #     user_nums_string += i
             encryted_text_in_binary_list = []
             for i in text_in_binary_list:
-                user_final = i#+user_nums_string
+                user_final = i
                 for x in key:
                     encryted_text_in_binary_list.append(user_final[x-1])
                 encryted_text_in_binary = ""
@@ -705,6 +678,39 @@ def adv_index():
                 return z_string
             else:
                 return False
+        def decrypt(bin):
+            c = 0
+            temp = ""
+            z = []
+            for i in bin:
+                c += 1
+                if len(temp) == 8:
+                    z.append(temp)
+                    temp = ""
+                    temp += str(i)
+                else:
+                    temp += str(i)
+                    if len(temp) == 8:
+                        z.append(temp)
+                        temp = ""
+            decrypted_text_in_binary_list = []
+            for i in z:
+                user_final = i
+                for i in range(1,9):
+                    y = key.index(i)
+                    decrypted_text_in_binary_list.append(user_final[y])
+            decrypted_text_in_binary = ""
+            for i in decrypted_text_in_binary_list:
+                decrypted_text_in_binary += i
+            return binary_to_text(decrypted_text_in_binary)
+        if block1 == True or block2 == True:
+            return render_template("keyalert_adv.html")
+        else:
+            main()
+        if "û" in final:
+            return render_template("emojialert_adv.html", name=final,text=final)
+        else:
+            return render_template("greeting_adv.html", name=final,text=final)
+    return render_template("index_adv.html")
 if __name__ == "__main__":
     app.run()
-
