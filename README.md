@@ -32,7 +32,7 @@ Start the server
 
 ## Authors
 
-- [@tanushchauhan](https://www.github.com/octokatherine)
+- [@tanushchauhan](https://github.com/tanushchauhan/)
 
 ## Demo
 
